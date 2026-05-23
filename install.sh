@@ -30,6 +30,12 @@ export WINEPREFIX
 
 mkdir -p ${LSU_LOGDIR}
 
+if [[ "$TARGET_DIR" != "$SCRIPT_DIR" ]]; then
+  cp "${SCRIPT_DIR}/install.sh" "${TARGET_DIR}/install.sh"
+  chmod +x "${TARGET_DIR}/install.sh"
+  echo -e "${GREEN}Installer copied to ${TARGET_DIR}/install.sh${NC}"
+fi
+
 check_tools() {
   if ! command -v winetricks > /dev/null 2>&1; then
     echo -e "${RED}Winetricks is not installed, cannot proceed.${NC}"
