@@ -268,7 +268,7 @@ install_winecarte() {
   fi
 
   mkdir "${workdir}/winecarte"
-  curl -sL --fail "https://api.github.com/repos/srounce/winecarte/releases/326390858" \
+  curl -sL --fail "https://api.github.com/repos/srounce/winecarte/releases/328366058" \
     | grep "browser_download_url" \
     | cut -d : -f 2,3 \
     | tr -d \" \
