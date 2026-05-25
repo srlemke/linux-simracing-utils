@@ -15,8 +15,10 @@ CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
+log_redirect="> /dev/null 2>&1"
 if [[ $DEBUG == "1" ]]; then
   set -x
+  log_redirect=""
 else
   export WINEDEBUG="-all"
 fi
@@ -37,11 +39,11 @@ if [[ "$TARGET_DIR" != "$SCRIPT_DIR" ]]; then
 fi
 
 check_tools() {
-  if ! command -v wine > /dev/null 2>&1; then
+  if ! command -v wine $log_redirect; then
     echo -e "${RED}Wine is not installed, cannot proceed.${NC}"
   fi
 
-  if ! command -v winetricks > /dev/null 2>&1; then
+  if ! command -v winetricks $log_redirect; then
     echo -e "${RED}Winetricks is not installed, cannot proceed.${NC}"
   fi
 }
@@ -79,7 +81,7 @@ EOF
     chmod +x $SILENT_WINE
 
     set +e
-    WINE=$SILENT_WINE winetricks -q dotnet48 >> "${LSU_LOGDIR}/dotnet_install.log" 2>&1
+    WINE=$SILENT_WINE winetricks -q dotnet48 >> "${LSU_LOGDIR}/dotnet_install.log" $log_redirect
     rm $SILENT_WINE
     set -e
 
@@ -107,7 +109,7 @@ check_simhub() {
   echo -e "${CYAN}Checking for existing SimHub installation...${NC}"
 
   found_simhub=0
-  if wine reg QUERY 'HKCU\Software\SimHub' /v LastInstalledVersion > /dev/null 2>&1; then
+  if wine reg QUERY 'HKCU\Software\SimHub' /v LastInstalledVersion $log_redirect; then
     found_simhub=1
   fi
 
