@@ -72,7 +72,7 @@ check_dotnet() {
     echo -e "${CYAN}Installing .Net 4.8...${NC}"
     SILENT_WINE=$(mktemp)
     cat > $SILENT_WINE << 'EOF'
-#!/bin/bash
+#!/usr/bin/env bash
 export WINEDEBUG=-all
 exec wine "$@"
 EOF
@@ -310,7 +310,7 @@ install_launch_wrapper() {
   mkdir -p "${bindir}"
 
   cat > "${bindir}/lsu-launch-wrapper" << EOF
-#!/bin/bash
+#!/usr/bin/env bash
 
 export WINEDEBUG=-all
 export WINEPREFIX="${WINEPREFIX}"
@@ -335,7 +335,7 @@ EOF
   chmod +x "${bindir}/lsu-launch-wrapper"
 
   cat > "${bindir}/lsu-winehub-manager" << EOF
-#!/bin/bash
+#!/usr/bin/env bash
 
 export WINEPREFIX="${WINEPREFIX}"
 
