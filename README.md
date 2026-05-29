@@ -23,7 +23,6 @@ This installer sets up everything needed to bridge that gap using **[Winecarte](
 Before running the installer, make sure the following are installed on your system. If you're not sure how to install them, search for instructions for your specific Linux distribution (e.g. Ubuntu, Fedora, Arch).
 
 - **Wine** — runs Windows applications on Linux
-- **Winetricks** — a helper tool for setting up Wine
 - **curl** — for downloading files (usually pre-installed)
 - **unzip** — for extracting downloaded archives (usually pre-installed)
 
