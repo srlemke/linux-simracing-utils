@@ -27,6 +27,8 @@ printf "${CYAN}Install directory: ${NC}"
 read -e -rp "" -i "$TARGET_DIR" TARGET_DIR
 
 LSU_LOGDIR="${TARGET_DIR}/log"
+echo "" > "${LSU_LOGDIR}/prefix_setup.log"
+
 WINEPREFIX="${TARGET_DIR}/pfx"
 export WINEPREFIX
 
@@ -55,9 +57,18 @@ setup_prefix() {
 
   WINEDLLOVERRIDES="mscoree,mshtml=" wineboot --init >> "${LSU_LOGDIR}/prefix_setup.log" 2>&1
 
+  echo -e "${GREEN}Prefix successfully created at $WINEPREFIX${NC}"
+}
+
+set_registry_entries() {
+  echo -e "${CYAN}Updating registry${NC}"
+
   wine reg add 'HKCU\Software\Microsoft\Avalon.Graphics' /v DisableHWAcceleration /t REG_DWORD /d 1 /f >> "${LSU_LOGDIR}/prefix_setup.log" 2>&1
 
-  echo -e "${GREEN}Prefix successfully created at $WINEPREFIX${NC}"
+  wine reg add 'HKLM\System\CurrentControlSet\Services\winebus' /v "Enable SDL" /t REG_DWORD /d 0 /f >> "${LSU_LOGDIR}/prefix_setup.log" 2>&1
+  wine reg add 'HKLM\System\CurrentControlSet\Services\winebus' /v "Map Controllers" /t REG_DWORD /d 0 /f >> "${LSU_LOGDIR}/prefix_setup.log" 2>&1
+
+  echo -e "${CYAN}Registry entries updated successfully${NC}"
 }
 
 check_dotnet() {
@@ -101,6 +112,8 @@ check_prefix() {
   if [[ ! -d "$WINEPREFIX" ]] || [[ ! -d "$WINEPREFIX/drive_c" ]]; then
     setup_prefix
   fi
+
+  set_registry_entries
   
   check_dotnet
 }
