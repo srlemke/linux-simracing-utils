@@ -10,7 +10,11 @@ Supported games include: Assetto Corsa, Assetto Corsa Competizione, Assetto Cors
 
 SimHub and CrewChief are Windows applications. On Linux, Windows software is run using a compatibility layer called [Wine](https://www.winehq.org/). The catch is that sim racing games write their telemetry data (speed, gear, lap times, etc.) to a region of memory that Wine-hosted apps can't normally see.
 
-This installer sets up everything needed to bridge that gap using **[Winecarte](https://github.com/srounce/winecarte)**. Winecarte has two components: **Winehub**, which maps shared memory from Linux into the Wine environment (so SimHub and CrewChief can read game telemetry), and **winecarte-run**, which does the reverse — exposing Wine shared memory to Linux applications.
+This installer sets up everything needed to bridge that gap using **[Winecarte](https://github.com/srounce/winecarte)**. Winecarte has three components:
+
+- **Wine2Linux** runs in a Wine prefix and maps shared memory in either direction between the prefix and the Linux system. Multiple instances can be run in different prefixes to replicate shared memory across prefixes.
+- **Winehub**, which runs against a 'target' (non-game, eg. SimHub/CrewChief/etc.) prefix and works by detecting games running in their own separate prefixes. Upon detection it starts an instance of Wine2Linux in the target prefix to map shared memory files from Linux into the Wine environment.
+- **winecarte-run**, wraps the execution of a Proton game and starts a Wine2Linux instance in the game's prefix to export data from the game to the Linux environment.
 
 ---
 
