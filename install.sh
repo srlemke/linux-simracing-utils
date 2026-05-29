@@ -102,7 +102,7 @@ EOF
     chmod +x $SILENT_WINE
 
     set +e
-    WINE=$SILENT_WINE run winetricks -q dotnet48 >> "${LSU_LOGDIR}/dotnet_install.log"
+    WINE=$SILENT_WINE run winetricks -q dotnet48 >> "${LSU_LOGDIR}/dotnet_install.log" 2>&1
     rm $SILENT_WINE
     set -e
 
