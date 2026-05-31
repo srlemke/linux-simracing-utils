@@ -434,7 +434,9 @@ patch_desktop_launcher() {
   local name="$1"
   local launcher_path="$2"
   
-  sed -i "s|^Exec=.* \"C:|Exec=${bindir}/lsu-launch-wrapper \"C:|" "$launcher_path"
+  if [[ -f "$2" ]]; then
+    sed -i "s|^Exec=.* \"C:|Exec=${bindir}/lsu-launch-wrapper \"C:|" "$launcher_path"
+  fi
 }
 
 check_tools
