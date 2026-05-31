@@ -439,7 +439,6 @@ patch_desktop_launcher() {
 check_tools
 
 check_prefix
-check_dotnet
 
 check_simhub
 
