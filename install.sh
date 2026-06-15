@@ -150,6 +150,12 @@ check_dotnet() {
   fi
 }
 
+check_allfonts() {
+  echo -e "${CYAN}Updating prefix allfonts installation...${NC}"
+  WINE=$SILENT_WINE run winetricks -q allfonts > "${LSU_LOGDIR}/allfonts_install.log" 2>&1
+  echo -e "${GREEN}Installation of allfonts is up to date.${NC}"
+}
+
 check_prefix() {
   if [[ ! -d "$WINEPREFIX" ]] || [[ ! -d "$WINEPREFIX/drive_c" ]]; then
     setup_prefix
@@ -158,6 +164,8 @@ check_prefix() {
   set_registry_entries
   
   check_dotnet
+
+  check_allfonts
 }
 
 check_simhub() {
