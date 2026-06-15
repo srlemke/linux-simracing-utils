@@ -17,11 +17,7 @@ MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 run() {
-  if [[ $DEBUG == "1" ]]; then
-    "$@" > "${LSU_LOGDIR}/install.log"
-  else
-    "$@" > /dev/null 2>&1
-  fi
+  "$@" > "${LSU_LOGDIR}/install.log" 2>&1
 }
 
 if [[ $DEBUG == "1" ]]; then
